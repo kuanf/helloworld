@@ -23,7 +23,7 @@ jobs:
 
     - name: Set up Test Environment
       run: 
-        make envtest
+        make envtest;
         ./bin/setup-envtest use 1.21.2
 
     - name: Build
