@@ -36,6 +36,7 @@ type HelloSpec struct {
 type HelloStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	Bar string `json:"foo,omitempty"`
 }
 
 //+kubebuilder:object:root=true
