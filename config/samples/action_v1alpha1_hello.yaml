@@ -1,0 +1,12 @@
+apiVersion: action.kuan.io/v1alpha1
+kind: Hello
+metadata:
+  labels:
+    app.kubernetes.io/name: hello
+    app.kubernetes.io/instance: hello-sample
+    app.kubernetes.io/part-of: helloworld
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: helloworld
+  name: hello-sample
+spec:
+  # TODO(user): Add fields here
