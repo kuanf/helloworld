@@ -33,6 +33,10 @@ type HelloReconciler struct {
 	Scheme *runtime.Scheme
 }
 
+var (
+	ctrlLog = ctrl.Log.WithName("controller")
+)
+
 //+kubebuilder:rbac:groups=action.kuan.io,resources=hellos,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=action.kuan.io,resources=hellos/status,verbs=get;update;patch
 //+kubebuilder:rbac:groups=action.kuan.io,resources=hellos/finalizers,verbs=update
@@ -49,7 +53,20 @@ type HelloReconciler struct {
 func (r *HelloReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
-	// TODO(user): your logic here
+	obj := &actionv1alpha1.Hello{}
+
+	err := r.Get(ctx, req.NamespacedName, obj)
+	if err != nil {
+		ctrlLog.Error(err, "getting request")
+		return ctrl.Result{}, nil
+	}
+
+	obj.Status.Bar = obj.Spec.Foo
+
+	err = r.Status().Update(ctx, obj)
+	if err != nil {
+		ctrlLog.Error(err, "updating status")
+	}
 
 	return ctrl.Result{}, nil
 }
